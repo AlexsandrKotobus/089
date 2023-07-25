@@ -1,4 +1,6 @@
 ﻿import React from "react";
+import './post-list-item.css';
+
 const PostListItem =()=>{
     return (
         // весь элемент - пост
@@ -10,11 +12,15 @@ const PostListItem =()=>{
         {/* блок кнопок - звездочка и корзина */}
         <div className="d-flex justify-content-center align-item-center">
             {/* звещдочка */}
-            <button className="btn-star btn-sm">
+            <button 
+            type="button" 
+            className="btn-star btn-sm">
                 <i className="fa fa-star"></i>
             </button>
             {/* корзина */}
-            <button className="btn-trash btn-sm">
+            <button 
+            type="button" 
+            className="btn-trash btn-sm">
                 <i className="fa fa-trash-can"></i>
             </button>
             {/* сердечко */}

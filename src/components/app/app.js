@@ -2,9 +2,10 @@
 
 import AppHeader from '../app-header'; //БЕЗ доп файла index.js в папке app-header:  import AppHeader from '../app-header/app-header' 
 import SearchPanel from '../search-panel';  //панель поиска
-import PostStatusFilter from '../post-status-filter';
+import PostStatusFilter from '../post-status-filter'; //фильтры
 import PostList from '../post-list'; //список постов
-
+import PostAddForm from '../post-add-form';  //поле ввода нового поста+кнопка сохранить
+import "./app.css";   //импорт стилей
 const App =() =>{
     return(
         //  дополнительная обертка -
@@ -14,13 +15,10 @@ const App =() =>{
         <div className='search-panel d-flex'>
             <SearchPanel />
             <PostStatusFilter/>
-
         </div>
-        <div>
             <PostList/>
+            <PostAddForm/>
         </div>
-
-    </div>
     );
 }
 export default App;
