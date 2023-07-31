@@ -6,7 +6,15 @@ import PostStatusFilter from '../post-status-filter'; //фильтры
 import PostList from '../post-list'; //список постов
 import PostAddForm from '../post-add-form';  //поле ввода нового поста+кнопка сохранить
 import "./app.css";   //импорт стилей
+
 const App =() =>{
+    //данные для постов (имитация с сервера)
+    const data = [
+        {label: 'Я хочу есть', important: true },
+        {label: 'Поиграй со мною', important: false},
+        {label: 'Спатоньки', important: false},
+        {label: 'почисть лоток', important: true}
+    ]
     return(
         //  дополнительная обертка -
     <div className='app'>   
@@ -16,7 +24,7 @@ const App =() =>{
             <SearchPanel />
             <PostStatusFilter/>
         </div>
-            <PostList/>
+            <PostList posts={data}/>
             <PostAddForm/>
         </div>
     );
