@@ -10,10 +10,10 @@ import "./app.css";   //импорт стилей
 const App =() =>{
     //данные для постов (имитация с сервера)
     const data = [
-        {label: 'Я хочу есть', important: true },
-        {label: 'Поиграй со мною', important: false},
-        {label: 'Спатоньки', important: false},
-        {label: 'почисть лоток', important: true}
+        {label: 'Я хочу есть', important: true, id: 'agwoug' },
+        {label: 'Поиграй со мною', important: false, id: 'hb4ug'},
+        {label: 'Спатоньки', important: false, id: '94865ff'},
+        {label: 'почисть лоток', important: true, id: 'hb85g'}
     ]
     return(
         //  дополнительная обертка -
