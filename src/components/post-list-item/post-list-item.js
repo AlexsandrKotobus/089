@@ -8,16 +8,25 @@ export default class PostListItem extends Component {
         // суперкоснстуктор с props
         super(props);
         this.state = {
-            important: false
+            important: false,
+            lake: false
         };
         //привязываем обр событий
         this.onImportant = this.onImportant.bind(this);
+        this.onLike = this.onLike.bind(this);
     }
     onImportant(){
         // только при помощи setState() можно изменять состояние компонента
         //this.setState(({important}) - деструктуризация нашего объекта state.important
         this.setState(({important})=>({
            important: !important 
+        }))
+    }
+    onLike(){
+        // только при помощи setState() можно изменять состояние компонента
+        //this.setState(({like}) - деструктуризация нашего объекта state.like
+        this.setState(({like})=>({
+           like: !like
         }))
 
     }
@@ -27,16 +36,22 @@ export default class PostListItem extends Component {
         //используем props, которые приходят в наш класс и вытащим из них label и important
         //это свойство будет приходить в каждый новосозданный компонент listItem
         const {label} = this.props;
-        const {important} = this.state;
+        const {important, like} = this.state;
         let classNames ='app-list-item d-flex justify-content-between'; //classNames -переменная содержащая все наши классы
         if (important){
             classNames +=" important"; //пробел перед important формирует строку правильно    
+        }
+        // и условие для лайков - добавляем стиль css
+        if(like){
+            classNames +=" like"; //пробел перед like формирует строку правильно
         }
         return(
             // весь элемент - пост
                 <div className={classNames}>
                 {/* текст поста */}
-                <span className="app-list-item-label">
+                <span className="app-list-item-label"
+                onClick={this.onLike}
+                >
                     {label}  {/* */}
                 </span>
                 {/* блок кнопок - звездочка и корзина */}
