@@ -1,10 +1,11 @@
 ﻿import React, {Component} from "react";
-import './post-list-item.css';
+import './post-list-item.scss';
 
 //создаем класс наследуемый из Component, React
 export default class PostListItem extends Component {
     // stay для кнопки звезда
     constructor(props){
+        console.log(props);
         // суперкоснстуктор с props
         super(props);
         this.state = {
@@ -33,9 +34,9 @@ export default class PostListItem extends Component {
     
     // создаем главный метод нашего класса
     render(){
-        //используем props, которые приходят в наш класс и вытащим из них label и important
+        //используем props, которые приходят в наш класс и вытащим из них label, onDelete и проч.
         //это свойство будет приходить в каждый новосозданный компонент listItem
-        const {label} = this.props;
+        const {label, onDelete} = this.props;
         const {important, like} = this.state;
         let classNames ='app-list-item d-flex justify-content-between'; //classNames -переменная содержащая все наши классы
         if (important){
@@ -67,12 +68,14 @@ export default class PostListItem extends Component {
                     {/* корзина */}
                     <button 
                     type="button" 
-                    className="btn-trash btn-sm">
+                    className="btn-trash btn-sm"
+                    onClick={onDelete}>
                         <i className="fa fa-trash-can"></i>
                     </button>
                     {/* сердечко */}
                     <i className="fa fa-heart"></i>
                 </div>
+                
             </div>
         )
     }

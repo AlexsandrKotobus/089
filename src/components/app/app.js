@@ -6,6 +6,17 @@ import PostStatusFilter from '../post-status-filter'; //фильтры
 import PostList from '../post-list'; //список постов
 import PostAddForm from '../post-add-form';  //поле ввода нового поста+кнопка сохранить
 import "./app.css";   //импорт стилей
+// import style from './App.module.css'; //импорт  стиля из модуля
+import styled from 'styled-components';
+
+// создадим переменную в которую поместим тот элемент который хотим создать - div, a, section и так далее
+const AppBlock = styled.div`
+    margin: 0 auto;
+    max-width: 800px;
+`;
+const StyledAppBlock = styled(AppBlock)`
+    background-color: grey;
+`
 
 const App =() =>{
     //данные для постов (имитация с сервера)
@@ -16,8 +27,9 @@ const App =() =>{
         {label: 'почисть лоток', important: true, id: 'hb85g'}
     ]
     return(
-        //  дополнительная обертка -
-    <div className='app'>   
+        //заменили div c кдассом стиля на компонент
+    <StyledAppBlock>  
+     {/* {style.app} - app - имя класса из файла, который нужен */}
         <AppHeader />
         {/* //обертка и строка поиска */}
         <div className='search-panel d-flex'>
@@ -26,7 +38,7 @@ const App =() =>{
         </div>
             <PostList posts={data}/>
             <PostAddForm/>
-        </div>
+        </StyledAppBlock>
     );
 }
 export default App;

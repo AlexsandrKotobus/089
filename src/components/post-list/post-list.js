@@ -3,6 +3,7 @@ import './post-list.css';
 
 
 import PostListItem from "../post-list-item";
+import {ListGroup} from "reactstrap";
 
 
 
@@ -10,13 +11,17 @@ import PostListItem from "../post-list-item";
 const PostList = ({posts}) =>{
    console.log(posts);
     const elements = posts.map((item)=>{
+        //добавим id + остальные свойства
         //деструктуризируем объект item на id и rest-оператор объединяет все остальное
         const{id, ...itemProps} = item;
         return (
                 // Этот вариант использует одинаковость названий свойств и значений
                 <li key={id} className='list-group-item'> 
-                    {/* так мы разворачиваем item */}
-                    <PostListItem {...itemProps}/>
+                    {/* так мы разворачиваем item  - остальные свойства без id*/}
+                    <PostListItem 
+                        {...itemProps}
+                        // pros для удаления - внутрь поместим функцию
+                        onDelete={()=> console.log('Deleted') }/>
                     
                 </li>
                 // // классический вариант
@@ -33,14 +38,10 @@ const PostList = ({posts}) =>{
         )
     });
     return (
-        <ul className="app-list list-group"  >
-        console.log(elements);
-           {elements}
-           {/* ниже - неправильный, но работающий вариант */}
-           {/* <PostListItem label={posts[0].label} important={posts[0].important}/>
-           <PostListItem label={posts[1].label} important={posts[1].important}/>
-           <PostListItem label={posts[2].label} important={posts[2].important}/> */}
-        </ul>
+        <ListGroup className="app-list">
+            {elements}
+        </ListGroup>
+       
     )
 }
 export default PostList;
