@@ -7,8 +7,8 @@ import {ListGroup} from "reactstrap";
 
 
 
-// {posts} - деструктур. props из app.js
-const PostList = ({posts}) =>{
+// {posts} и onDelete - деструктур. props из app.js,
+const PostList = ({posts, onDelete}) =>{
    console.log(posts);
     const elements = posts.map((item)=>{
         //добавим id + остальные свойства
@@ -21,8 +21,7 @@ const PostList = ({posts}) =>{
                     <PostListItem 
                         {...itemProps}
                         // pros для удаления - внутрь поместим функцию
-                        onDelete={()=> console.log('Deleted') }/>
-                    
+                        onDelete={()=> onDelete(id)}/>
                 </li>
                 // // классический вариант
                 // //key - формируем ключ
