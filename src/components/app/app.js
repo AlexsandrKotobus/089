@@ -37,8 +37,8 @@ const App =() =>{
             <PostStatusFilter/>
         </div>
             <PostList 
-            posts={data}
-            onDelete={id => console.log(id)}/>
+                posts={data}
+                onDelete={id => console.log(id)}/>
             <PostAddForm/>
         </StyledAppBlock>
     );

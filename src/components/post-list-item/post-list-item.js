@@ -10,7 +10,7 @@ export default class PostListItem extends Component {
         super(props);
         this.state = {
             important: false,
-            lake: false
+            like: false
         };
         //привязываем обр событий
         this.onImportant = this.onImportant.bind(this);
