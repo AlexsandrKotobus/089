@@ -1,4 +1,4 @@
-﻿import React from 'react';
+﻿import React, {Component} from 'react';
 
 import AppHeader from '../app-header'; //БЕЗ доп файла index.js в папке app-header:  import AppHeader from '../app-header/app-header' 
 import SearchPanel from '../search-panel';  //панель поиска
@@ -18,29 +18,52 @@ const StyledAppBlock = styled(AppBlock)`
     background-color: grey;
 `
 
-const App =() =>{
-    //данные для постов (имитация с сервера)
-    const data = [
-        {label: 'Я хочу есть', important: true, id: 'agwoug' },
-        {label: 'Поиграй со мною', important: false, id: 'hb4ug'},
-        {label: 'Спатоньки', important: false, id: '94865ff'},
-        {label: 'почисть лоток', important: true, id: 'hb85g'}
-    ]
-    return(
-        //заменили div c кдассом стиля на компонент
-    <StyledAppBlock>  
-     {/* {style.app} - app - имя класса из файла, который нужен */}
-        <AppHeader />
-        {/* //обертка и строка поиска */}
-        <div className='search-panel d-flex'>
-            <SearchPanel />
-            <PostStatusFilter/>
-        </div>
-            <PostList 
-                posts={data}
-                onDelete={id => console.log(id)}/>
-            <PostAddForm/>
-        </StyledAppBlock>
-    );
+export default class App extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            data:[
+                {label: 'Я хочу есть', important: true, id: 'agwoug' },
+                {label: 'Поиграй со мною', important: false, id: 'hb4ug'},
+                {label: 'Спатоньки', important: false, id: '94865ff'},
+                {label: 'почисть лоток', important: true, id: 'hb85g'}
+            ]
+        };
+        // жестко привязываем наш метод к экземпляру класса
+        this.deleteItem = this.deleteItem.bind(this); 
+       
+    }
+// функция удаления 
+deleteItem(id){
+    this.setState(({data}) =>{
+        // нам нужен параметр, который удаляется
+        const index = data.findIndex(elem => elem.id === id);
+        // мы разрежем массив slise - на до-удаляемого элемента и после
+        //с помощью spread-оператора разворачиваем наши массивы и соединяем их
+        const newArr = [...data.slice(0,index), ...data.slice(index+1)];
+        return{
+            // мы заменили новым массивом старый, а не изменяли его напряму
+            data: newArr
+        }
+    })
 }
-export default App;
+
+    render(){
+        return(
+            //заменили div c кдассом стиля на компонент
+        <StyledAppBlock>  
+         {/* {style.app} - app - имя класса из файла, который нужен */}
+            <AppHeader />
+            {/* //обертка и строка поиска */}
+            <div className='search-panel d-flex'>
+                <SearchPanel />
+                <PostStatusFilter/>
+            </div>
+                <PostList 
+                    posts={this.state.data}
+                    onDelete={this.deleteItem}/>
+                <PostAddForm/>
+            </StyledAppBlock>
+        );
+    }
+}
