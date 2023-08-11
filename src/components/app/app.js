@@ -15,7 +15,7 @@ const AppBlock = styled.div`
     max-width: 800px;
 `;
 const StyledAppBlock = styled(AppBlock)`
-    background-color: grey;
+    // background-color: grey;
 `
 
 export default class App extends Component{
@@ -23,30 +23,48 @@ export default class App extends Component{
         super(props);
         this.state = {
             data:[
-                {label: 'Я хочу есть', important: true, id: 'agwoug' },
-                {label: 'Поиграй со мною', important: false, id: 'hb4ug'},
-                {label: 'Спатоньки', important: false, id: '94865ff'},
-                {label: 'почисть лоток', important: true, id: 'hb85g'}
+                {label: 'Я хочу есть', important: true, id: 1 },
+                {label: 'Поиграй со мною', important: false, id: 2},
+                {label: 'Спатоньки', important: false, id: 3},
+                {label: 'почисть лоток', important: true, id: 4}
             ]
         };
         // жестко привязываем наш метод к экземпляру класса
         this.deleteItem = this.deleteItem.bind(this); 
+        this.addItem = this.addItem.bind(this); 
+        //значение id с которого мы начнем их генерировать (4 имеющихся элемента +1)
+        this.maxId = 5;
        
     }
-// функция удаления 
-deleteItem(id){
-    this.setState(({data}) =>{
-        // нам нужен параметр, который удаляется
-        const index = data.findIndex(elem => elem.id === id);
-        // мы разрежем массив slise - на до-удаляемого элемента и после
-        //с помощью spread-оператора разворачиваем наши массивы и соединяем их
-        const newArr = [...data.slice(0,index), ...data.slice(index+1)];
-        return{
-            // мы заменили новым массивом старый, а не изменяли его напряму
-            data: newArr
+    // функция удаления 
+    deleteItem(id){
+        this.setState(({data}) =>{
+            // находим индекс параметра, который удаляется
+            const index = data.findIndex(elem => elem.id === id);
+            // мы разрежем массив slice - на до-удаляемого элемента и после
+            //с помощью spread-оператора разворачиваем наши массивы и соединяем их
+            const newArr = [...data.slice(0,index), ...data.slice(index+1)];
+            return{
+                // мы заменили новым массивом старый, а не изменяли его напряму
+                data: newArr
+            }
+        })
+    }
+    //функция добавления поста
+    addItem(body){
+
+        const newItem = {
+            label: body,
+            important: false,
+            id: this.maxId++
         }
-    })
-}
+        this.setState(({data}) => {
+            const newArr = [...data, newItem];
+            return{
+                data: newArr
+            }
+        })
+    }
 
     render(){
         return(
@@ -62,7 +80,8 @@ deleteItem(id){
                 <PostList 
                     posts={this.state.data}
                     onDelete={this.deleteItem}/>
-                <PostAddForm/>
+                <PostAddForm 
+                    onAdd={this.addItem}/>
             </StyledAppBlock>
         );
     }
