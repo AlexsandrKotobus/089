@@ -8,7 +8,7 @@ import {ListGroup} from "reactstrap";
 
 
 // {posts} и onDelete - деструктур. props из app.js,
-const PostList = ({posts, onDelete}) =>{
+const PostList = ({posts, onDelete, onToggleImportant, onToggleLiked}) =>{
    console.log(posts);
     const elements = posts.map((item)=>{
         //добавим id + остальные свойства
@@ -21,21 +21,13 @@ const PostList = ({posts, onDelete}) =>{
                     <PostListItem 
                         {...itemProps}
                         // pros для удаления - внутрь поместим функцию
-                        onDelete={()=> onDelete(id)}/>
+                        onDelete={()=> onDelete(id)}
+                        onToggleImportant={()=>onToggleImportant(id)}
+                        onToggleLiked={()=>onToggleLiked(id)}/>
                 </li>
-                // // классический вариант
-                // //key - формируем ключ
-                //  <li key={item.id} className='list-group-item'> 
-                //  {/* наш отдельный пост */}
-                //  <PostListItem 
-                //  // так как мы map наш массив item попадает в каждый элемент нашего массива
-                //  // чтобы получить каждый Label из этого item можно написать item.posts и item.important
-                //  label={item.label} 
-                //  important={item.important}/>
-                //  </li>
  
-        )
-    });
+            )
+        });
     return (
         <ListGroup className="app-list">
             {elements}

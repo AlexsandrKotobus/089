@@ -19,14 +19,14 @@ const Header = styled.div`
         &:hover{color: blue}
     } 
 `
-
-const AppHeader =() =>{
+//сразу же деструктурируем prpos
+const AppHeader =({liked, allPosts}) =>{
     return(
         <Header as ='a' >
             {/* <Header colored> такая запись равносильна <Header colored>= {true}  - но как редко пишут, некрасиво */}
             {/* пока статичная надпись */}
             <h1>Кот Елисей</h1>                            
-            <h2>5 записей, из них понравилось 0</h2>
+            <h2>{allPosts} записей, из них понравилось {liked}</h2>
         </Header>
     )
 }

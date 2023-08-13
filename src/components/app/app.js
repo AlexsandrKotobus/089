@@ -23,15 +23,18 @@ export default class App extends Component{
         super(props);
         this.state = {
             data:[
-                {label: 'Я хочу есть', important: true, id: 1 },
-                {label: 'Поиграй со мною', important: false, id: 2},
-                {label: 'Спатоньки', important: false, id: 3},
-                {label: 'почисть лоток', important: true, id: 4}
+                {label: 'Я хочу есть', important: true, like: false, id: 1 },
+                {label: 'Поиграй со мною', important: false, like: false, id: 2},
+                {label: 'Спатоньки', important: false, like: false, id: 3},
+                {label: 'почисть лоток', important: true, like: false, id: 4}
             ]
         };
         // жестко привязываем наш метод к экземпляру класса
         this.deleteItem = this.deleteItem.bind(this); 
         this.addItem = this.addItem.bind(this); 
+        this.onToggleImportant = this.onToggleImportant.bind(this);
+        this.onToggleLiked = this.onToggleLiked.bind(this);
+        
         //значение id с которого мы начнем их генерировать (4 имеющихся элемента +1)
         this.maxId = 5;
        
@@ -65,13 +68,38 @@ export default class App extends Component{
             }
         })
     }
+    onToggleImportant(id){
+        console.log(`important ${id}`);
+    }
+    onToggleLiked(id){
+        //деструктурируем state.data в {data}//потому что {data} = (state.data)
+       this.setState(({data})=>{
+        //находим индекс лайкнутого элемента
+        const index = data.findIndex(elem=>elem.id===id);
+        //получаем весь элемент по индексу
+        const old = data[index];
+        //spread-оператором разворачиваем объект и меняем ему свойство like на противоположное
+        const newItem = {...old, like: !old.like};
+        //создаем новый массив с 1часть старый+измененный элемент+конец старого массива
+        const newArr = [...data.slice(0, index), newItem, ...data.slice(index+1)];
+        //перезаписываем измененный массив
+        return {data: newArr} 
+       })
+    }
 
     render(){
+        const {data} = this.state;
+        //В перем liked отфильтровываем только те посты, у которых like = true
+        //filter отдает новый массив, длину которого мы измерили
+        const liked =  data.filter(item =>item.like).length;
+        const allPosts =   data.length;
         return(
             //заменили div c кдассом стиля на компонент
         <StyledAppBlock>  
          {/* {style.app} - app - имя класса из файла, который нужен */}
-            <AppHeader />
+            <AppHeader 
+             liked = {liked}
+             allPosts = {allPosts}/>
             {/* //обертка и строка поиска */}
             <div className='search-panel d-flex'>
                 <SearchPanel />
@@ -79,7 +107,9 @@ export default class App extends Component{
             </div>
                 <PostList 
                     posts={this.state.data}
-                    onDelete={this.deleteItem}/>
+                    onDelete={this.deleteItem}
+                    onToggleImportant={this.onToggleImportant}
+                    onToggleLiked={this.onToggleLiked}/>
                 <PostAddForm 
                     onAdd={this.addItem}/>
             </StyledAppBlock>
